@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeworkPilot AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-scene" aria-hidden="true">
+        <span class="mesh mesh-one"></span>
+        <span class="mesh mesh-two"></span>
+        <span class="mesh mesh-three"></span>
+        <span class="signal signal-one"></span>
+        <span class="signal signal-two"></span>
+        <span class="signal signal-three"></span>
+        <span class="grid-glow"></span>
+    </div>
+
+    <main class="app-shell">
+        <section class="hero-panel view is-active" id="homeView" aria-labelledby="pageTitle">
+            <nav class="topbar" aria-label="Primary">
+                <a class="brand" href="#homeView" aria-label="HomeworkPilot AI home">
+                    <span class="brand-mark" aria-hidden="true">
+                        <svg viewBox="0 0 48 48" role="img">
+                            <path d="M12 30.5V13.8C12 11.7 13.7 10 15.8 10H34C36.2 10 38 11.8 38 14V32.2C38 34.3 36.3 36 34.2 36H17.5L11 40L12 30.5Z"></path>
+                            <path d="M18 18H31M18 24H28M18 30H25"></path>
+                        </svg>
+                    </span>
+                    <span>HomeworkPilot AI</span>
+                </a>
+                <div class="nav-links">
+                    <a class="ghost-link" href="admin.html">Dashboard</a>
+                    <a class="ghost-link" href="#workspace">Start</a>
+                </div>
+            </nav>
+
+            <div class="hero-grid">
+                <div class="hero-copy reveal">
+                    <span class="eyebrow">SaaS-grade academic planner</span>
+                    <h1 id="pageTitle">HomeworkPilot AI</h1>
+                    <p>Turn homework into clear, structured learning plans with teacher-aware pacing.</p>
+                    <div class="hero-actions">
+                        <a class="primary-link ripple-target" href="#workspace">Build my plan</a>
+                        <button class="icon-button" type="button" id="samplePromptButton" aria-label="Insert sample prompt">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 2L14.8 8.8L22 9.4L16.5 14.1L18.2 21L12 17.3L5.8 21L7.5 14.1L2 9.4L9.2 8.8L12 2Z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <section class="workspace-card reveal delay-one" id="workspace" aria-label="Homework input">
+                    <div class="card-header">
+                        <div>
+                            <span class="section-kicker">Ask or upload</span>
+                            <h2>What are you working on?</h2>
+                        </div>
+                        <span class="status-pill">Ready</span>
+                    </div>
+
+                    <form id="homeworkForm" class="homework-form">
+                        <div class="prompt-shell">
+                            <label for="promptInput">Homework prompt</label>
+                            <textarea id="promptInput" name="homework" rows="8" placeholder="Paste a question, assignment brief, teacher notes, or the part you are stuck on."></textarea>
+                        </div>
+
+                        <div class="form-grid">
+                            <label class="field">
+                                <span>Name</span>
+                                <input type="text" id="nameInput" name="name" placeholder="Your name">
+                            </label>
+                            <label class="field">
+                                <span>Subject</span>
+                                <input type="text" id="subjectInput" name="subject" placeholder="Math, science, history">
+                            </label>
+                            <label class="field">
+                                <span>Class</span>
+                                <input type="text" id="classInput" name="class" placeholder="Class 9, Grade 10">
+                            </label>
+                            <label class="field">
+                                <span>Teacher style</span>
+                                <select id="teacherStyleInput" name="teacher_style">
+                                    <option value="STRICT">Strict</option>
+                                    <option value="NORMAL" selected>Normal</option>
+                                    <option value="FRIENDLY">Friendly</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <input type="hidden" name="teacher_notes" value="">
+                        <input type="hidden" name="additional_notes" value="">
+
+                        <label class="upload-zone" id="uploadZone" for="fileInput">
+                            <input id="fileInput" name="file" type="file" accept=".pdf,image/*">
+                            <span class="upload-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 16V4M7 9L12 4L17 9"></path>
+                                    <path d="M5 16V19C5 20.1 5.9 21 7 21H17C18.1 21 19 20.1 19 19V16"></path>
+                                </svg>
+                            </span>
+                            <span>
+                                <strong id="uploadTitle">Upload image or PDF</strong>
+                                <small id="uploadMeta">Optional. Your file will be included with the plan request.</small>
+                            </span>
+                        </label>
+
+                        <div class="form-footer">
+                            <p id="formHint">Type a prompt, upload a file, or do both.</p>
+                            <button class="submit-button ripple-target" type="submit">
+                                <span>Generate plan</span>
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M5 12H19M13 6L19 12L13 18"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </section>
+
+        <section class="processing-view view" id="processingView" aria-labelledby="processingTitle" aria-live="polite">
+            <div class="processing-card">
+                <div class="loader-ring" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="section-kicker">Working on it</span>
+                <h2 id="processingTitle">Analyzing question...</h2>
+                <p id="processingDetail">Reading your homework context and preparing a structured answer.</p>
+                <div class="progress-track" aria-hidden="true">
+                    <span id="progressBar"></span>
+                </div>
+                <div class="processing-steps" id="processingSteps" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <section class="results-view view" id="resultsView" aria-labelledby="resultsTitle">
+            <header class="results-header reveal">
+                <div>
+                    <span class="section-kicker">Generated plan</span>
+                    <h2 id="resultsTitle">Your Homework Plan</h2>
+                </div>
+                <div class="result-actions">
+                    <button class="secondary-button ripple-target" type="button" id="copyButton">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9 9H18V20H9Z"></path>
+                            <path d="M6 15H5C4.4 15 4 14.6 4 14V5C4 4.4 4.4 4 5 4H14C14.6 4 15 4.4 15 5V6"></path>
+                        </svg>
+                        <span>Copy</span>
+                    </button>
+                    <button class="secondary-button ripple-target" type="button" id="newPlanButton">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20 12A8 8 0 1 1 17.7 6.4"></path>
+                            <path d="M20 4V10H14"></path>
+                        </svg>
+                        <span>New</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="result-grid" id="resultGrid"></div>
+        </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

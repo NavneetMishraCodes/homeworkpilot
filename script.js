@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://homeworkpilot.onrender.com";
+const API_BASE_URL = "https://homeworkpilot-1.onrender.com";
 const PROCESSING_MIN_TIME = 900;
 
 const form = document.getElementById("homeworkForm");
